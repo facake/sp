@@ -6,6 +6,8 @@ import java.util.Observable;
 
 /** The state of a game of 2048.
  *  @author TODO: YOUR NAME HERE
+ *  (3-10 hours) writing the tilt method
+ *  will be to figure out which of these methods and instance variables are useful.
  */
 public class Model extends Observable {
     /** Current contents of the board. */
@@ -113,6 +115,10 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        // modify the board using move(), tile()
+        // score += new merged tile's value
+        // if any changes, changed = true
+        //
 
         checkGameOver();
         if (changed) {
@@ -138,6 +144,15 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        // tile, size from Board class
+        int length = b.size();
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (b.tile(i, j) == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -148,6 +163,15 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        // t.value, MAX_PIECE,
+        int length = b.size();
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (b.tile(i, j) != null && b.tile(i, j).value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -159,6 +183,26 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        // at least one empty space, or two adjacent tiles with the same value
+        if (emptySpaceExists(b)) {
+            return true;
+        }
+
+        for (int i = 0; i < b.size(); i++) {
+            for (int j = 0; j < b.size() - 1; j++) {
+                if (b.tile(i, j) != null && b.tile(i, j).value() == b.tile(i, j + 1).value()) {
+                    return true;
+                }
+            }
+        }
+        for (int j = 0; j < b.size(); j++) {
+            for (int i = 0; i < b.size() - 1; i++) {
+                if (b.tile(i, j) != null && b.tile(i, j).value() == b.tile(i + 1, j).value()) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 

@@ -21,7 +21,8 @@ public class Collatz {
             n = nextNumber(n);
             System.out.print(n + " ");
         }
-        System.out.println();
+        String s;
+        System.out.println(s);
     }
 }
 

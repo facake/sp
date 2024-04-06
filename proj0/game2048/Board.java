@@ -9,6 +9,7 @@ import java.util.Random;
 
 /**
  * @author hug
+ * method: setViewingPerspective, tile, move
  */
 public class Board implements Iterable<Tile> {
     /** Current contents of the board. */

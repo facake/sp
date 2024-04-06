@@ -2,9 +2,9 @@ package game2048;
 
 /** Represents the image of a numbered tile on a 2048 board.
  *  @author P. N. Hilfinger.
+ *  .value()
  */
 public class Tile {
-
     /** A new tile with VALUE as its value at (ROW, COL).  This
      *  constructor is private, so all tiles are created by the
      *  factory methods create, move, and merge. */
