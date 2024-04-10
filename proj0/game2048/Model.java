@@ -115,16 +115,70 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
-        // modify the board using move(), tile()
-        // score += new merged tile's value
-        // if any changes, changed = true
-        //
+        // 1.modify the board using move(), tile()
+        // 2.score += new merged tile's value
+        // 3.if any changes, changed = true
+        // at least 2 helper methods
+        // for non-up, use board.setViewingPerspective(s), as if s is north
+        //      restore to north before call to tilt: board.setViewingPerspective(Side.NORTH)
+//        for (int c = 0; c < board.size(); c++) {
+//            for (int r = 0; r < board.size(); r++) {
+//                Tile t = board.tile(c, r);
+//                if (board.tile(c, r) != null) {
+//                    board.move(c, 3, t);
+//                    score += 1;
+//                    changed = true;
+//                }
+//            }
+//        }
+        board.setViewingPerspective(side);
+        for (int c = 0; c < board.size(); c++) {
+            align(c);
+            tripleMerge(c);
+            doubleMerge(c);
+        }
+        board.setViewingPerspective(Side.NORTH);
+        changed = true;
 
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
+    }
+
+    public void align(int c) {
+        for (int r = board.size() - 1; r >= 1; r--) {
+            if (board.tile(c, r) == null || board.tile(c, r) == board.tile(c, r - 1)) {
+                if (board.tile(c, r - 1) != null) {
+                    board.move(c, r, board.tile(c, r - 1));
+                }
+            }
+        }
+    }
+
+    boolean merge = true;
+    public void tripleMerge(int c) {
+        for (int r = 3; r >= 1; r--) {
+            if (board.tile(c, r) == null) {
+                return;
+            }
+        }
+        if (board.tile(c, 3).value() == board.tile(c, 2).value() && board.tile(c, 2).value() == board.tile(c, 1).value() || (board.tile(c, 3).value() + board.tile(c, 2).value()) == board.tile(c, 1).value()) {
+            board.move(c, 3, board.tile(c, 2));
+            score += board.tile(c, 3).value();
+            board.move(c, 2, board.tile(c, 1));
+            merge = false;
+        }
+    }
+
+    public void doubleMerge(int c) {
+        for (int r = 0; r <= board.size() - 2; r++) {
+            if (merge && board.tile(c, r) != null && board.tile(c, r).value() == board.tile(c, r + 1).value()) {
+                board.move(c, r + 1, board.tile(c, r));
+                score += board.tile(c, r + 1).value();
+            }
+        }
     }
 
     /** Checks if the game is over and sets the gameOver variable
