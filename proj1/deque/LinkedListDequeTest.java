@@ -3,10 +3,13 @@ package deque;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
 
+    /* TO DO:
+        import lib
+    more tests
+     */
     @Test
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
      * finally printing the results.

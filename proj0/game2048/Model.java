@@ -131,14 +131,35 @@ public class Model extends Observable {
 //                }
 //            }
 //        }
+//        board.setViewingPerspective(side);
+//        for (int c = 0; c < board.size(); c++) {
+//            align(c);
+//            tripleMerge(c);
+//            doubleMerge(c);
+////            align(c);
+////            doubleMerge(c);
+//        }
+//        board.setViewingPerspective(Side.NORTH);
+//        changed = true;
         board.setViewingPerspective(side);
-        for (int c = 0; c < board.size(); c++) {
-            align(c);
-            tripleMerge(c);
-            doubleMerge(c);
+        for (int col = 0; col < board.size(); col++) {
+            boolean merged = false;
+            for (int row = board.size() - 2; row >= 0; row--) {
+                Tile tile = board.tile(col, row);
+                if (tile == null) {
+                    continue;
+                }
+                int rowDest = rowDest(col, row, merged);
+                if (rowDest != row) {
+                    changed = true;
+                }
+                if (board.move(col, rowDest, tile)) {
+                    score += board.tile(col, rowDest).value();
+                    merged = true;
+                }
+            }
         }
         board.setViewingPerspective(Side.NORTH);
-        changed = true;
 
         checkGameOver();
         if (changed) {
@@ -147,39 +168,72 @@ public class Model extends Observable {
         return changed;
     }
 
-    public void align(int c) {
-        for (int r = board.size() - 1; r >= 1; r--) {
-            if (board.tile(c, r) == null || board.tile(c, r) == board.tile(c, r - 1)) {
-                if (board.tile(c, r - 1) != null) {
-                    board.move(c, r, board.tile(c, r - 1));
+    public int rowDest(int col, int row, boolean merged) {
+//        int col = tile.col();
+//        int row = tile.row();
+        int rowDest = row;
+        try {
+            while (board.tile(col, rowDest + 1) == null) {
+                rowDest++;
+            }
+        }
+        catch (IndexOutOfBoundsException e) {
+
+        }
+        try {
+            if (board.tile(col, rowDest + 1) != null && board.tile(col, rowDest + 1).value() == board.tile(col, row).value()) {
+                if (!merged) {
+                    rowDest++;
+                } else if (board.tile(col, rowDest + 2).value() == 2 * board.tile(col, row).value()) {
+                    rowDest++;
                 }
-            }
-        }
-    }
 
-    boolean merge = true;
-    public void tripleMerge(int c) {
-        for (int r = 3; r >= 1; r--) {
-            if (board.tile(c, r) == null) {
-                return;
             }
         }
-        if (board.tile(c, 3).value() == board.tile(c, 2).value() && board.tile(c, 2).value() == board.tile(c, 1).value() || (board.tile(c, 3).value() + board.tile(c, 2).value()) == board.tile(c, 1).value()) {
-            board.move(c, 3, board.tile(c, 2));
-            score += board.tile(c, 3).value();
-            board.move(c, 2, board.tile(c, 1));
-            merge = false;
-        }
-    }
+        catch (IndexOutOfBoundsException e) {
 
-    public void doubleMerge(int c) {
-        for (int r = 0; r <= board.size() - 2; r++) {
-            if (merge && board.tile(c, r) != null && board.tile(c, r).value() == board.tile(c, r + 1).value()) {
-                board.move(c, r + 1, board.tile(c, r));
-                score += board.tile(c, r + 1).value();
-            }
         }
+//        if (!merged && board.tile(col, rowDest + 1) != null && board.tile(col, rowDest + 1).value() == tile.value()) {
+//            rowDest++;
+//        }
+//        if (merged && board.tile(col, rowDest + 2) != null && board.tile(col, rowDest + 2).value() == 2 * tile.value()) {
+//            rowDest++;
+//        }
+        return rowDest;
     }
+//    public void align(int c) {
+//        for (int r = board.size() - 1; r >= 1; r--) {
+//            if (board.tile(c, r) == null || board.tile(c, r) == board.tile(c, r - 1)) {
+//                if (board.tile(c, r - 1) != null) {
+//                    board.move(c, r, board.tile(c, r - 1));
+//                }
+//            }
+//        }
+//    }
+//
+//    boolean merge = true;
+//    public void tripleMerge(int c) {
+//        for (int r = 3; r >= 1; r--) {
+//            if (board.tile(c, r) == null) {
+//                return;
+//            }
+//        }
+//        if (board.tile(c, 3).value() == board.tile(c, 2).value() && board.tile(c, 2).value() == board.tile(c, 1).value() || (board.tile(c, 3).value() + board.tile(c, 2).value()) == board.tile(c, 1).value()) {
+//            board.move(c, 3, board.tile(c, 2));
+//            score += board.tile(c, 3).value();
+//            board.move(c, 2, board.tile(c, 1));
+//            merge = false;
+//        }
+//    }
+//
+//    public void doubleMerge(int c) {
+//        for (int r = 0; r <= board.size() - 2; r++) {
+//            if (merge && board.tile(c, r) != null && board.tile(c, r).value() == board.tile(c, r + 1).value()) {
+//                board.move(c, r + 1, board.tile(c, r));
+//                score += board.tile(c, r + 1).value();
+//            }
+//        }
+//    }
 
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
