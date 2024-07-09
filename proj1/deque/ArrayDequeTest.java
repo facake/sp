@@ -23,6 +23,7 @@ public class ArrayDequeTest {
         }
 
         ad.printDeque();
+        System.out.println(ad.get(0));
         System.out.println(ad.size());
     }
 }

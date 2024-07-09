@@ -64,7 +64,11 @@ public class ArrayDeque<T> {
 
     public T get(int i) {
         if (i >= 0 && i < this.items.length) {
-            return this.items[i];
+            int targetPos = next(nextFirst);
+            for (int j = 0; j < i; j++) {
+                targetPos = next(targetPos);
+            }
+            return this.items[targetPos];
         }
         return null;
     }
