@@ -1,6 +1,6 @@
 package deque;
 
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Deque<T>{
     public class Node {
         public Node prev;
         public T item;
@@ -32,14 +32,12 @@ public class LinkedListDeque<T> {
         }
     }
 
+    @Override
     public int size() {
         return this.size;
     }
 
-    public boolean isEmpty() {
-        return this.size == 0;
-    }
-
+    @Override
     public void addFirst(T item) {
         size++;
         Node node = new Node(sentF, item, sentF.next);
@@ -47,6 +45,7 @@ public class LinkedListDeque<T> {
         sentF.next = node;
     }
 
+    @Override
     public void addLast(T item) {
         size++;
         Node node = new Node(sentB.prev, item, sentB);
@@ -54,6 +53,7 @@ public class LinkedListDeque<T> {
         sentB.prev = node;
     }
 
+    @Override
     public T removeFirst() {
         if (isEmpty()) {
             return null;
@@ -66,6 +66,7 @@ public class LinkedListDeque<T> {
         return item;
     }
 
+    @Override
     public T removeLast() {
         if (isEmpty()) {
             return null;
@@ -78,6 +79,7 @@ public class LinkedListDeque<T> {
         return item;
     }
 
+    @Override
     public T get(int i) {
 //      可以一分为二，从sentF开始遍历到中点，或者从sentB开始遍历到中点
         if (i < 0 || i >= this.size) {
@@ -90,6 +92,7 @@ public class LinkedListDeque<T> {
         return p.item;
     }
 
+    @Override
     public void printDeque() {
         Node p = sentF;
         while (p.next != null && p.next != sentB) {
