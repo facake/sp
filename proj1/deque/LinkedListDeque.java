@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T>{
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     public class Node {
         public Node prev;
         public T item;
@@ -102,6 +102,10 @@ public class LinkedListDeque<T> implements Deque<T>{
             System.out.print(p.item + " ");
         }
         System.out.println();
+    }
+
+    public T getRecursive(int index) {
+        return null;
     }
 
     public Iterator<T> iterator() {

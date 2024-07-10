@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
     private int size;
     private int nextFirst;
@@ -112,14 +112,6 @@ public class ArrayDeque<T> implements Deque<T> {
             System.out.print(item + " ");
         }
         System.out.println();
-    }
-
-    public T[] getItems() {
-        return items;
-    }
-
-    public T getRecursive(int index) {
-        return null;
     }
 
     public Iterator<T> iterator() {
