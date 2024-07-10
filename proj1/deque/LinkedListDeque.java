@@ -1,5 +1,7 @@
 package deque;
 
+import java.util.Iterator;
+
 public class LinkedListDeque<T> implements Deque<T>{
     public class Node {
         public Node prev;
@@ -100,6 +102,14 @@ public class LinkedListDeque<T> implements Deque<T>{
             System.out.print(p.item + " ");
         }
         System.out.println();
+    }
+
+    public Iterator<T> iterator() {
+        return null;
+    }
+
+    public boolean equals(Object o) {
+        return false;
     }
 }
 
