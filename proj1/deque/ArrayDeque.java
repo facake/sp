@@ -45,7 +45,7 @@ public class ArrayDeque<T> {
         if (isEmpty()) {
             return null;
         }
-        T item = get(next(nextFirst));
+        T item = this.items[next(nextFirst)];
         nextFirst = next(nextFirst);
         size--;
         return item;
@@ -56,7 +56,7 @@ public class ArrayDeque<T> {
             return null;
         }
         resize();
-        T item = this.get(prev(nextLast));
+        T item = this.items[prev(nextLast)];
         nextLast = prev(nextLast);
         size--;
         return item;
@@ -74,22 +74,24 @@ public class ArrayDeque<T> {
     }
 
     private void resize() {
-//        if (size == items.length) {
-//            T[] array = (T[]) new Object[items.length * 2];
-//            arraycopy(items, array, next(nextFirst), size);
-//            items = array;
-//        } else if (1.0 * size / items.length <= 0.25) {
-//            T[] array = (T[]) new Object[(int) (items.length * 0.5)];
-//            arraycopy(items, array, next(nextFirst), size);
-//            items = array;
-//        }
+        if (size == items.length) {
+            T[] array = (T[]) new Object[items.length * 2];
+            arraycopy(array, size);
+        } else if (items.length > 8 && 1.0 * size / items.length <= 0.25) {
+            T[] array = (T[]) new Object[(int) (items.length * 0.5)];
+            arraycopy(array, size);
+        }
     }
 
-    private void arraycopy(T[] s, T[] d, int firstPos, int n) {
+    private void arraycopy(T[] d, int n) {
+        int srcPos = next(nextFirst);
         for (int i = 0; i < n; i++) {
-            d[firstPos] = s[firstPos];
-            firstPos = next(firstPos);
+            d[i] = items[srcPos];
+            srcPos = next(srcPos);
         }
+        items = d;
+        nextFirst = prev(0);
+        nextLast = size;
     }
 
     public int size() {
@@ -105,5 +107,9 @@ public class ArrayDeque<T> {
             System.out.print(item + " ");
         }
         System.out.println();
+    }
+
+    public T[] getItems() {
+        return items;
     }
 }
