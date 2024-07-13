@@ -143,4 +143,40 @@ public class LinkedListDequeTest {
         assertEquals(10, lld2.size());
         lld2.printDeque();
     }
+
+    @Test
+    public void testIterator() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        for (int i = 0; i < 10; i++) {
+            lld1.addLast(i);
+        }
+        for (Integer i : lld1) {
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void testTwoDequesEquality() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        for (int i = 0; i < 10; i++) {
+            lld1.addLast(i);
+        }
+        ArrayDeque<Integer> lld2 = new ArrayDeque<>();
+        for (int i = 9; i >= 0; i--) {
+            lld2.addLast(i);
+        }
+        lld1.printDeque();
+        lld2.printDeque();
+//        assertTrue(lld1.equals(lld2));
+        assertTrue(lld2.equals(lld1));
+    }
+
+    @Test
+    public void testGetRecursive() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
+        for (int i = 0; i < 100; i++) {
+            lld1.addLast(i);
+        }
+        assertEquals(Integer.valueOf(50), lld1.getRecursive(50));
+    }
 }

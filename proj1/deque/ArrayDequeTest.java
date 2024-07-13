@@ -33,4 +33,15 @@ public class ArrayDequeTest {
         ad.addLast(0);
         System.out.println(ad.get(0));
     }
+
+    @Test
+    public void testIterator() {
+        ArrayDeque<Integer> ad = new ArrayDeque<>();
+        for (int i = 0; i < 10; i++) {
+            ad.addLast(i);
+        }
+        for (Integer i : ad) {
+            System.out.println(i);
+        }
+    }
 }

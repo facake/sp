@@ -1,5 +1,7 @@
 package deque;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
+
 import java.util.Iterator;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
@@ -104,17 +106,63 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         System.out.println();
     }
 
-    public T getRecursive(int index) {
-        return null;
+    public T getRecursive(int i) {
+        if (i < 0 || i >= this.size) {
+            return null;
+        }
+        Node p = sentF.next;
+        for (int j = 0; j < i; j++) {
+            p = p.next;
+        }
+        return p.item;
     }
 
+    @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedListDequeIterator();
     }
 
+    private class LinkedListDequeIterator implements Iterator<T> {
+        private Node p;
+
+        public LinkedListDequeIterator() {
+            p = sentF.next;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return p != sentB;
+        }
+        public T next() {
+            T returnItem = p.item;
+            p = p.next;
+            return returnItem;
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o instanceof Deque other) {
+            if (this.size != other.size()) {
+                return false;
+            }
+            for (T item : this) {
+                for (int i = 0; i < other.size(); i++) {
+                    if (item.equals(other.get(i))) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return true;
+        }
         return false;
     }
+
+
 }
 
 
