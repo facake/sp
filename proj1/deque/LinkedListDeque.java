@@ -1,14 +1,18 @@
 package deque;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
-    public class Node {
-        public Node prev;
-        public T item;
-        public Node next;
+    private class Node {
+        private Node prev;
+        private T item;
+        private Node next;
 
-        public Node() {}
+        public Node() {
+
+        }
 
         public Node(Node prev, T item, Node next) {
             this.prev = prev;
@@ -27,12 +31,12 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         this.size = 0;
     }
 
-    public LinkedListDeque(LinkedListDeque other) {
-        this();
-        for (int i = 0; i < other.size(); i++) {
-            this.addLast((T) other.get(i));
-        }
-    }
+//    public LinkedListDeque(LinkedListDeque other) {
+//        this();
+//        for (int i = 0; i < other.size(); i++) {
+//            this.addLast((T) other.get(i));
+//        }
+//    }
 
     @Override
     public int size() {
@@ -121,7 +125,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     }
 
     private class LinkedListDequeIterator implements Iterator<T> {
-        private Node p;
+        Node p;
 
         public LinkedListDequeIterator() {
             p = sentF.next;
@@ -131,6 +135,7 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         public boolean hasNext() {
             return p != sentB;
         }
+
         public T next() {
             T returnItem = p.item;
             p = p.next;
@@ -147,20 +152,19 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             if (this.size != ((Deque<?>) o).size()) {
                 return false;
             }
+            List<T> items = new ArrayList<>();
             for (T item : this) {
-                for (int i = 0; i < ((Deque<?>) o).size(); i++) {
-                    if (item.equals(((Deque<?>) o).get(i))) {
-                        return true;
-                    }
+                items.add(item);
+            }
+            for (int i = 0; i < ((Deque<?>) o).size(); i++) {
+                if (!items.contains(((Deque<?>) o).get(i))) {
+                    return false;
                 }
-                return false;
             }
             return true;
         }
         return false;
     }
-
-
 }
 
 

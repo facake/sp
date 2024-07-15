@@ -1,6 +1,7 @@
 package deque;
 
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
@@ -41,6 +42,17 @@ public class ArrayDequeTest {
         }
         for (Integer i : ad) {
             System.out.println(i);
+        }
+    }
+
+    @Test
+    public void testStringArrayDequeIterator() {
+        ArrayDeque<String> ad = new ArrayDeque<>();
+        ad.addLast("hello");
+        ad.addLast("world");
+        ad.addLast("!");
+        for (String s : ad) {
+            System.out.println(s);
         }
     }
 }

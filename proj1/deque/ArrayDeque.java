@@ -1,6 +1,8 @@
 package deque;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private T[] items;
@@ -50,6 +52,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (isEmpty()) {
             return null;
         }
+        resize();
         T item = this.items[next(nextFirst)];
         nextFirst = next(nextFirst);
         size--;
@@ -120,8 +123,11 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     private class ArrayDequeIterator implements Iterator<T> {
         private int p;
+        private T[] array;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
+            array = (T[]) new Object[items.length];
+            arraycopy(array, size);
             p = 0;
         }
 
@@ -132,7 +138,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
         @Override
         public T next() {
-            T returnItem = items[p];
+            T returnItem = array[p];
             p++;
             return returnItem;
         }
@@ -146,13 +152,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             if (this.size != ((Deque<?>) o).size()) {
                 return false;
             }
+            List<T> items = new ArrayList<>();
             for (T item : this) {
-                for (int i = 0; i < ((Deque<?>) o).size(); i++) {
-                    if (item.equals(((Deque<?>) o).get(i))) {
-                        return true;
-                    }
+                items.add(item);
+            }
+            for (int i = 0; i < ((Deque<?>) o).size(); i++) {
+                if (!items.contains(((Deque<?>) o).get(i))) {
+                    return false;
                 }
-                return false;
             }
             return true;
         }
