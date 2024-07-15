@@ -165,14 +165,13 @@ public class LinkedListDequeTest {
             lld1.addLast(i);
         }
         ArrayDeque<Integer> lld2 = new ArrayDeque<>();
-        for (int i = 8; i >= 0; i--) {
+        for (int i = 9; i >= 0; i--) {
             lld2.addLast(i);
         }
-        lld2.addLast(10);
         lld1.printDeque();
         lld2.printDeque();
-        assertFalse(lld1.equals(lld2));
-        assertFalse(lld2.equals(lld1));
+        assertTrue(lld1.equals(lld2));
+        assertTrue(lld2.equals(lld1));
     }
 
     @Test

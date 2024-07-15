@@ -1,8 +1,6 @@
 package deque;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
     private class Node {
@@ -152,12 +150,14 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             if (this.size != ((Deque<?>) o).size()) {
                 return false;
             }
-            List<T> items = new ArrayList<>();
             for (T item : this) {
-                items.add(item);
-            }
-            for (int i = 0; i < ((Deque<?>) o).size(); i++) {
-                if (!items.contains(((Deque<?>) o).get(i))) {
+                int cnt = 0;
+                for (int i = 0; i < ((Deque<?>) o).size(); i++) {
+                    if (item.equals(((Deque<?>) o).get(i))) {
+                        cnt++;
+                    }
+                }
+                if (cnt < 1) {
                     return false;
                 }
             }
