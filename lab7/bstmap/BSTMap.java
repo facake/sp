@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.In;
 import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         BSTMap<Integer, String> map = new BSTMap<>();
         map.put(2, "张三");
         map.put(1, "李四");
@@ -14,7 +14,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         System.out.println(map.containsKey(3));
         System.out.println(map.containsKey(4));
         map.printInOrder();
-    }
+    }*/
 
     private Node root;
     private Set<K> keySet;
@@ -104,7 +104,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         return x.size;
     }
 
-    public boolean isEmpty() {
+    private boolean isEmpty() {
         return this.size() == 0;
     }
 
@@ -131,7 +131,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         }
     }
 
-    public K min() {
+    private K min() {
         if (isEmpty()) throw new NoSuchElementException("calls min() with empty symbol table");
         return min(root).key;
     }
@@ -141,7 +141,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         else                return min(x.left);
     }
 
-    public K max() {
+    private K max() {
         if (isEmpty()) throw new NoSuchElementException("calls max() with empty symbol table");
         return max(root).key;
     }
@@ -151,12 +151,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
         else                 return max(x.right);
     }
 
-    public Iterable<K> keys() {
+    private Iterable<K> keys() {
         if (isEmpty()) return new ArrayDeque<>();
         return keys(min(), max());
     }
 
-    public Iterable<K> keys(K lo, K hi) {
+    private Iterable<K> keys(K lo, K hi) {
         if (lo == null) throw new IllegalArgumentException("first argument to keys() is null");
         if (hi == null) throw new IllegalArgumentException("second argument to keys() is null");
 
