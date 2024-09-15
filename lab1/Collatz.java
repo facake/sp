@@ -21,9 +21,6 @@ public class Collatz {
             n = nextNumber(n);
             System.out.print(n + " ");
         }
-        String s1 I'm messing around hahahha;hahaha
-        System.out.println(s);
-//        add something
     }
 }
 
