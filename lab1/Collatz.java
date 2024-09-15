@@ -23,6 +23,7 @@ public class Collatz {
         }
         String s1 I'm messing around hahahha;hahaha
         System.out.println(s);
+//        add something
     }
 }
 
